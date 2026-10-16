@@ -16,7 +16,7 @@ Salary = st.slider("Your ideal salary for purchace or finances", min_value=30000
 Item_cost = st.slider("Cost of item or purchase", min_value=10, max_value=150000, value=40000, step=1)#slider for item cost + slider domain
 currency = st.selectbox("Select Currency:", ["CAD", "USD"]) # Create a clean dropdown menu for currency
 
-st.write(f"Your Salary: **${Salary}**")#telling the user what the recommended salary is 
+st.write(f"Your Salary: **${Salary}**")#telling the user what the salary is 
 st.write(f"Your Item cost: **${Item_cost}**")#telling the user what the item cost
 st.write(f"Your Currency is being calculated in: **{currency}**")
 
