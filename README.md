@@ -5,8 +5,8 @@ A full-stack, interactive web application built with Streamlit and the Google Ge
 
 ##  Features
 * **Interactive UI:** Dynamic sliders for salary and item/purchase costs, paired with a multi-currency selector (CAD/USD).
-* **AI-Powered Insights:** Integrates Google's `gemini-3.5-flash` model to analyze complex financial scenarios, calculate estimated monthly expenses (loans, insurance, housing), and suggest realistic alternatives.
-* **Robust Output Sanitization:** Custom text-scrubbing logic to ensure clean markdown parsing and a seamless user experience.
+* **AI-Powered Insights:** Integrates Google's `gemini-3.5-flash-lite` and `gemini-1.5-flash-lite` models to analyze complex user-input scenarios, calculate estimated monthly expenses (loans, insurance, housing), and suggest realistic alternatives.
+* **Robust Output Sanitization:** Custom text-scrubbing logic to ensure clean Markdown parsing and a seamless user experience.
 
 ##  Tech Stack
 * **Frontend/UI:** Streamlit
