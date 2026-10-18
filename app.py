@@ -2,9 +2,12 @@ import os#this is for cleaning terminal for debugging
 import streamlit as st#this is the web ui powered by streamlit 
 from google import genai          #imports google gemini
 from google.genai import errors
+try:
+    if "GEMINI_API_KEY" in st.secrets:
+        os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
+except Exception:
+    pass
 
-if "GEMINI_API_KEY" in st.secrets:
-    os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
 st.title("AI integrated financial guide app")#title
 st.write("This is my first app")#small about me we will remove this at the end? TBD
@@ -23,7 +26,7 @@ st.write(f"Your Currency is being calculated in: **{currency}**")
 
 user_prompt = st.text_input("Ask your AI advisor a goal or question:")
 if user_prompt:
-  with st.spinner("AI is processing your request"):
+  with st.spinner("Processing your request"):
     client = genai.Client()
 
     full_prompt = f"""
@@ -43,6 +46,8 @@ if user_prompt:
         the green boxes show up when writing Recommended Option: Buy a base new Mini Cooper (starts around 34,000 CAD) or a certified pre-owned 
         2021-2023 Mini Cooper (under 45,000 km) for 24,000 to 30,000 CAD. This brings your monthly payment to a safe range of 500 to $650 CAD. for example
       on the response because the numbers are showing up as variable boxes 
+
+      also at the beginnign or end of each message you reply with you MUST state what gemini model you used
       """
 
     response = None
@@ -55,24 +60,24 @@ if user_prompt:
     except Exception:
       try:
         st.warning(
-                  "The 3.8 AI is a bit busy right now, swaping to 3.5"
+                  "Ai is limited right now due to high demand, swaping to backup models!"
               )
         # If 3.8 is busy, fall back to 3.5-flash
         response = client.models.generate_content(
-            model="gemini-3.5-flash", contents=full_prompt
+            model="gemini-3.5-flash-lite", contents=full_prompt
         )
         
       except Exception:
         # If both fail, response stays None
         response = None
 
-    # Write the output ONCE down here if we got a response
+    # Write the output ONCE down here IF we got a response
     if response:
       st.subheader("AI Financial Advice:")
       clean_output = response.text.replace("*", "").replace("_", "")
       st.write(clean_output)
     else:
-      # Otherwise, show the warning box
+      # Otherwise, show the warning box which is if the free api key is being limited by pro accounts. 
       st.warning(
-          "Both Gemini 3.8 and 3.5 are a bit too busy right now. Please wait a second and try again!"
+          " All Google Gemini Ai models are currently in high use right now, please try again later,"
       )
