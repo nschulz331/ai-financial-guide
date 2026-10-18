@@ -1,13 +1,14 @@
+#this is my first app!
 import os#this is for cleaning terminal for debugging 
 import streamlit as st#this is the web ui powered by streamlit 
 from google import genai          #imports google gemini
 from google.genai import errors
-
+#i love this feature its kinda cool
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
 st.title("AI integrated financial guide app")#title
-st.write("This is my first app")#small about me we will remove this at the end? TBD
+
 
 
 #the .x determins the type of ui the app uses so .slider creates a slider with the specified domains.
@@ -48,18 +49,15 @@ if user_prompt:
     response = None
 
     try:
-      # Try 3.8-flash first
+      # Try 3.5-flash-lite first
       response = client.models.generate_content(
-          model="gemini-3.8-flash", contents=full_prompt
+          model="gemini-3.5-flash-lite", contents=full_prompt
       )
     except Exception:
       try:
-        st.warning(
-                  "The 3.8 AI is a bit busy right now, swaping to 3.5"
-              )
-        # If 3.8 is busy, fall back to 3.5-flash
+        # fall back to 2.5-flash-lite if failed
         response = client.models.generate_content(
-            model="gemini-3.5-flash", contents=full_prompt
+            model="gemini-2.5-flash-lite", contents=full_prompt
         )
         
       except Exception:
@@ -74,5 +72,5 @@ if user_prompt:
     else:
       # Otherwise, show the warning box
       st.warning(
-          "Both Gemini 3.8 and 3.5 are a bit too busy right now. Please wait a second and try again!"
+          "Both Gemini 3.5-flash-lite and 2.5-flash-lite are a bit too busy right now. Please wait a second and try again!"
       )
