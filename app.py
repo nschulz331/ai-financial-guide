@@ -45,21 +45,25 @@ if user_prompt:
       on the response because the numbers are showing up as variable boxes 
       """
 
-try:
+    response = None
+
+    try:
       # Try 3.8-flash first
       response = client.models.generate_content(
           model="gemini-3.8-flash", contents=full_prompt
       )
-    except Exception as e:
-      # This will print the real error in your terminal so you can see if it's a rate limit
-      print(f"DEBUG ERROR: {e}")
-      
+    except Exception:
       try:
-        st.warning("The 3.8 AI is a bit busy right now, swapping to 3.5")
+        st.warning(
+                  "The 3.8 AI is a bit busy right now, swaping to 3.5"
+              )
+        # If 3.8 is busy, fall back to 3.5-flash
         response = client.models.generate_content(
             model="gemini-3.5-flash", contents=full_prompt
         )
+        
       except Exception:
+        # If both fail, response stays None
         response = None
 
     # Write the output ONCE down here if we got a response
