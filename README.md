@@ -1,7 +1,7 @@
 
 #   AI-Powered Financial Lifestyle Simulator 
 
-A full-stack, interactive web application built with Streamlit and the Google GenAI SDK that allows users to simulate financial goals, evaluate purchasing decisions, and receive context-aware, real-time AI financial advice.
+A full-stack, interactive web application built with Streamlit and the Google GenAI SDK that lets users simulate financial goals, evaluate purchase decisions, and get context-aware, real-time AI financial advice.
 
 ##  Features
 * **Interactive UI:** Dynamic sliders for salary and item/purchase costs, paired with a multi-currency selector (CAD/USD).
