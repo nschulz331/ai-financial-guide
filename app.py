@@ -3,6 +3,8 @@ import streamlit as st#this is the web ui powered by streamlit
 from google import genai          #imports google gemini
 from google.genai import errors
 
+if "GEMINI_API_KEY" in st.secrets:
+    os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
 st.title("AI integrated financial guide app")#title
 st.write("This is my first app")#small about me we will remove this at the end? TBD
