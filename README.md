@@ -12,5 +12,29 @@ A full-stack, interactive web application built with Streamlit and the Google Ge
 * **Frontend/UI:** Streamlit
 * **AI Integration:** Google GenAI SDK (`google-genai`)
 * **Environment:** Python 3.14, GitHub Codespaces
-##  Setup
-https://ai-financial-guide-2wzmqtvdgyz62foyrqwfpc.streamlit.app/ 
+
+## Setup / Live Demo
+**[Try the Live Web App Here](https://ai-financial-guide-2wzmqtvdgyz62foyrqwfpc.streamlit.app/)**
+
+
+##  Future Plans:
+* Pie charts
+* Interactive LIVE sliders ( current ones are not live)
+    -New sliders would be changed by AI (prompted?) TBD
+* AI will use a Vehicle data API like MarketCheck for up to 5 listings but will attempt to find 3 ( still
+  researching this for this feature since the whole finding keys is new still
+ - Website data will then find the listing, and the listing will be checked with Gemini to return both
+    - The link to the listing
+    - Only returns the listings that are clean titles / salvaged / ext... (which will be prompted by the user)
+    
+* Creates new charts according to each listing, including:
+   - Prices
+   - Km/miles graphs on ideal values, i.e., 100k km is roughly 1/4 the way until this car is at end of life 
+   - Recommended salary to afford the car and then recommended financing
+   - A down payment calculator to be added to the returned data.
+* Live sliders that actively change when clicking a submit/ update data button
+  - These sliders will also change the pie charts, which will be created based on the user-inputted sliders,
+  - If the user-inputted data is not changed, it will automatically change or recommend changing the sliders
+    when prompted by the ai/ to the user to change the data.
+
+ 
