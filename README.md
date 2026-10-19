@@ -1,49 +1,40 @@
 
 #   AI-Powered Financial Lifestyle Simulator 
 
-A full-stack, interactive web application built with Streamlit and the Google GenAI SDK that allows users to simulate financial goals, evaluate purchasing decisions, and receive context-aware, real-time AI financial advice.
+A full-stack, interactive web application built with Streamlit and the Google GenAI SDK that lets users simulate financial goals, evaluate purchase decisions, and get context-aware, real-time AI financial advice.
 
 ##  Features
 * **Interactive UI:** Dynamic sliders for salary and item/purchase costs, paired with a multi-currency selector (CAD/USD).
-* **AI-Powered Insights:** Integrates Google's `gemini-3.5-flash-lite` and `gemini-1.5-flash-lite` models to analyze complex user-input scenarios, calculate estimated monthly expenses (loans, insurance, housing), and suggest realistic alternatives.
+* **AI-Powered Insights:** Integrates multiple Google `gemini-flash-lite` models to analyze complex user-input scenarios, calculate estimated monthly expenses (loans, insurance, housing), and suggest realistic alternatives.
 * **Robust Output Sanitization:** Custom text-scrubbing logic to ensure clean Markdown parsing and a seamless user experience.
 
 ##  Tech Stack
 * **Frontend/UI:** Streamlit
 * **AI Integration:** Google GenAI SDK (`google-genai`)
 * **Environment:** Python 3.14, GitHub Codespaces
-##  Setup
-1.
 
-Clone your repository
+## Setup / Live Demo
+**[Try the Live Web App Here](https://ai-financial-guide-2wzmqtvdgyz62foyrqwfpc.streamlit.app/)**
 
-Download your code into the new environment:
 
-git clone https://github.com/nschulz331/ai-financial-guide.git
+##  Future Plans:
+* Pie charts
+* Interactive LIVE sliders ( current ones are not live)
+    -New sliders would be changed by AI (prompted?) TBD
+* AI will use a Vehicle data API like MarketCheck for up to 5 listings but will attempt to find 3 ( still
+  researching this for this feature since the whole finding keys is new still
+ - Website data will then find the listing, and the listing will be checked with Gemini to return both
+    - The link to the listing
+    - Only returns the listings that are clean titles / salvaged / ext... (which will be prompted by the user)
+    
+* Creates new charts according to each listing, including:
+   - Prices
+   - Km/miles graphs on ideal values, i.e., 100k km is roughly 1/4 the way until this car is at end of life 
+   - Recommended salary to afford the car and then recommended financing
+   - A down payment calculator to be added to the returned data.
+* Live sliders that actively change when clicking a submit/ update data button
+  - These sliders will also change the pie charts, which will be created based on the user-inputted sliders,
+  - If the user-inputted data is not changed, it will automatically change or recommend changing the sliders
+    when prompted by the ai/ to the user to change the data.
 
-2. Move into the project folder
-
-Change your terminal directory into the folder you just downloaded:
-
-cd ai-financial-guide
-
-3. Install the required dependencies
-
-Install Streamlit and the Google GenAI library:
-
-pip install streamlit google-genai
-
-4. Set your Gemini API key
-
-Pass your API key into the terminal session so the app can communicate with Google:
-
-export GEMINI_API_KEY="your_actual_api_key_here"
-
-5. Launch the app!
-
-Fire up Streamlit:
-
-streamlit run app.py
-
-##
-Codespaces will automatically pop up a notification saying your app is running on port 8503 and ask if you want to open it in your browser. Click Open in Browser, and you'll see your live application right away!
+ 
