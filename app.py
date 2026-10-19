@@ -25,13 +25,11 @@ else:
     Item_cost = 40000
     currency = "CAD"   
 
-st.write(f"Your Salary: **${Salary:,}**")#telling the user what the salary is being set at
-st.write(f"Your Item cost: **${Item_cost:,}**")#telling the user what the item cost
-st.write(f"Your Currency is being calculated in: **{currency}**") #what currency is being used.
 
-
-
-
+col1, col2, col3 = st.columns(3)
+col1.metric("Salary", f"${Salary:,}")
+col2.metric("Item Cost", f"${Item_cost:,}")
+col3.metric("Currency", f"{currency}",)
 
 
 #begin the gemini section of the app
