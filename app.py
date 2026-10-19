@@ -9,18 +9,30 @@ except Exception:
     pass
 
 
+use_user_data = False #default value
+
 st.title("AI integrated financial guide app")#title
 st.write("This is my first app")#small about me we will remove this at the end? TBD
+#asks the user if they would like to use the default data or custom data for the following variables.
+use_user_data = st.checkbox("I would like to use custom data (salary, price, currency) If left unchecked, the AI will use its own data to answer your questions", value=False)#checkbox for askign to use custom data also the value = valse makes it so the box is unchecked by defauly
+if use_user_data==True:
+    Salary = st.slider("Your ideal salary for purchace or finances", min_value=30000, max_value=300000, value=75000, step=1)#slider for salary + slider domain
+    Item_cost = st.slider("Cost of item or purchase", min_value=10, max_value=150000, value=40000, step=1)#slider for item cost + slider domain
+    currency = st.selectbox("Select Currency:", ["CAD", "USD"]) # Create a clean dropdown menu for currency
+else:
+    st.write("Using default data for AI calculations") #if unchecked the app will use these base values 
+    Salary = 75000
+    Item_cost = 40000
+    currency = "CAD"   
 
-
-#the .x determins the type of ui the app uses so .slider creates a slider with the specified domains.
-Salary = st.slider("Your ideal salary for purchace or finances", min_value=30000, max_value=300000, value=75000, step=1)#slider for salary + slider domain
-Item_cost = st.slider("Cost of item or purchase", min_value=10, max_value=150000, value=40000, step=1)#slider for item cost + slider domain
-currency = st.selectbox("Select Currency:", ["CAD", "USD"]) # Create a clean dropdown menu for currency
-
-st.write(f"Your Salary: **${Salary:,}**")#telling the user what the salary is 
+st.write(f"Your Salary: **${Salary:,}**")#telling the user what the salary is being set at
 st.write(f"Your Item cost: **${Item_cost:,}**")#telling the user what the item cost
-st.write(f"Your Currency is being calculated in: **{currency}**")
+st.write(f"Your Currency is being calculated in: **{currency}**") #what currency is being used.
+
+
+
+
+
 
 #begin the gemini section of the app
 
