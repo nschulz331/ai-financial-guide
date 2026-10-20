@@ -25,7 +25,7 @@ else:
     Item_cost = 40000
     currency = "CAD"   
 
-
+#writes the info value bar for the following variables
 col1, col2, col3 = st.columns(3)
 col1.metric("Salary", f"${Salary:,}")
 col2.metric("Item Cost", f"${Item_cost:,}")
@@ -36,7 +36,7 @@ col3.metric("Currency", f"{currency}",)
 
 user_prompt = st.text_input("Ask your AI advisor a goal or question:")
 if user_prompt:
-  with st.spinner("Processing your request"):
+  with st.spinner("Processing your request, depending on demand this may take up to 30 seconds"):
     client = genai.Client()
 
     full_prompt = f"""
