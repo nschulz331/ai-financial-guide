@@ -53,32 +53,32 @@ col3.metric("Currency", f"{currency}")
 user_prompt = st.text_input("Ask your AI advisor a goal or question:")
 if user_prompt:
     with st.spinner(
-        "Processing your request, depending on demand this may take up to 30 seconds"
+        "Processing your request, depending on demand this may take up to ~30 seconds"
     ):
         client = genai.Client()
 
         # Cleaned up prompt instructions so the AI doesn't read python scripts inside it
         full_prompt = f"""
-      The user's current salary is {Salary} {currency}.
-      The user is looking for an item which has a cost of {Item_cost} {currency} and wants to buy it with their salary.
-      If the user does not specify details about their item (like a car's mileage or trim), research and reply with a recommendation.
-      User's goal/question: {user_prompt}
-      
-      CRITICAL INSTRUCTIONS:
-      1. Keep the AI response clean, clear, and highly concise.
-      2. DO NOT use backticks (`) or raw markdown code-blocks anywhere in your regular conversational paragraphs.
-      3. Format financial values normally (e.g. 40,000 CAD or $40,000 CAD). Do not wrap them in spaces or quotes that look like variables.
-      4. DO NOT write or mention model names (like Gemini 1.5 Pro) in the response text.
+        The user's current salary is {Salary} {currency}.
+        The user is looking for an item which has a cost of {Item_cost} {currency} and wants to buy it with their salary.
+        If the user does not specify details about their item (like a car's mileage or trim), research and reply with a recommendation.
+        User's goal/question: {user_prompt}
+        
+        CRITICAL INSTRUCTIONS:
+        1. Keep the AI response clean, clear, and highly concise.
+        2. DO NOT use backticks (`) or raw markdown code-blocks anywhere in your regular conversational paragraphs.
+        3. Format financial values normally (e.g. 40,000 CAD or $40,000 CAD). Do not wrap them in spaces or quotes that look like variables.
+        4. DO NOT write or mention model names (like Gemini 1.5 Pro) in the response text.
 
-      At the very end of your response, output a JSON block wrapped in triple backticks exactly like this:
-      ```json
-      {{
-        "categories": ["Recommended Salary", "Monthly Payment", "Monthly Savings", "Downpayment Required", "Leftover Monthly Income"],
-        "values": [90000, 4500, 600, 5000, 3200]
-      }}
-      ```
-      The values array must only contain numbers for plotting.
-      """
+        At the very end of your response, output a JSON block wrapped in triple backticks exactly like this:
+        ```json
+        {{
+            "categories": ["Rent & Housing", "Car/Item Monthly Payment", "Insurance & Fuel", "Food & Groceries", "Utilities & Bills", "Leftover Monthly Savings"],
+            "values":
+        }}
+        ```
+        The values array must only contain numbers for plotting. Ensure ALL numbers reflect a MONTHLY breakdown, and that all slices add up exactly to the user's total monthly take-home income.
+        """
 
         try:
             # 1st Choice: Highest free tier rate limits
@@ -142,7 +142,32 @@ if user_prompt:
                 st.markdown(clean_output) #writes the first part (0)
 
                 # Create a Plotly chart
-                fig = px.bar(x=chart_labels, y=chart_values, title="Financial Data") #x is the chart lables, is catagories, y is the values, title is the title of the graph
-                st.plotly_chart(fig)
+                fig = px.pie(
+                names=chart_labels, 
+                values=chart_values,
+                title="Financial Breakdown", 
+                hole=0.3,  # Creates a donut chart mmm tasty
+                template="plotly_dark" #dark theme because cool
+                
+                )
+                # 2. Add the built-in percentage and label text OUTSIDE. ( changed from inside because i cant read upside down smh)
+                fig.update_traces(textposition="outside", textinfo="percent+label") #text is corectly rotated + a allocated apunt is reflected in a percent value
+                fig.update_layout(showlegend=True)
+                fig.update_layout(
+                    showlegend=True,
+                    legend=dict(
+                        orientation="h",  # 'h' forces the legend items to sit horizontally in a row
+                        yanchor="top",  # Anchors the top of the legend box
+                        y=-0.1,  # Pushes the box slightly below the bottom edge of the chart (0 is the bottom)
+                        xanchor="center",  # Centers the legend row alignment
+                        x=0.5,  # Places it exactly in the middle horizontal line (0.5 is center)
+                    ),
+                )
+                # 3. Display it wide and responsive on the screen
+                st.plotly_chart(fig, use_container_width=True)
+
             else:
-                st.markdown(text_content) #if the json fails to be created by ai then we just use the first part (0)
+                st.markdown(text_content) #if the json fails to be created by ai then we just use the first part (0) which yaps to the user
+                st.warning(
+                    "Gemini Failed to create Json file for charting. Please try again or reword your question."
+                )
