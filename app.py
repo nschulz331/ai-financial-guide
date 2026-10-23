@@ -2,6 +2,9 @@ import os  # this is for cleaning terminal for debugging
 import streamlit as st  # this is the web ui powered by streamlit
 from google import genai  # imports google gemini
 from google.genai import errors
+import plotly.express as px #for graphs 
+import json #fun data aparently
+
 
 try:
     if "GEMINI_API_KEY" in st.secrets:
@@ -123,10 +126,23 @@ if user_prompt:
             text_content = response.text
 
             # Splits JSON chart data from text description so it doesn't leak into the app view
-            if "```json" in text_content:
-                parts = text_content.split("```json")
-                clean_output = parts[0]
+            if "```json" in text_content: #did we get the json data block?
+                parts = text_content.split("```json") #splits the text into two parts, the actual reading text and the json data 
+                # This takes the second part, splits it at the closing backticks, and grabs just the clean data string
+                raw_json_string = parts[1].split("```")[0].strip() #grabs the second part (part 1) and splits it from the first one (0)
+                # Convert the text string into a Python dictionary object
+                financial_data = json.loads(raw_json_string) #converts it into a dictionary so we can use the data for the graph
+
+                # Extract the lists from inside the dictionary using their keys
+                chart_labels = financial_data["categories"] #def var from dictionary from json 
+                chart_values = financial_data["values"] # ^^^
+
+                clean_output = parts[0]  
                 # Fixes squishing by rendering clean standard Markdown text blocks safely
-                st.markdown(clean_output)
+                st.markdown(clean_output) #writes the first part (0)
+
+                # Create a Plotly chart
+                fig = px.bar(x=chart_labels, y=chart_values, title="Financial Data") #x is the chart lables, is catagories, y is the values, title is the title of the graph
+                st.plotly_chart(fig)
             else:
-                st.markdown(text_content)
+                st.markdown(text_content) #if the json fails to be created by ai then we just use the first part (0)
