@@ -29,9 +29,9 @@ def render_side_bar():
     else:
         current_yearly = int(st.session_state.salary_monthly * 12)
         if input_mode == "Slider":
-            yearly_salary = st.sidebar.slider("Yearly Salary", min_value=0, max_value=240000, value=current_yearly, step=1000)
+            yearly_salary = st.sidebar.slider("Yearly Salary", min_value=0, max_value=240000, value=current_yearly, step=500)
         else:
-            yearly_salary = st.sidebar.number_input("Yearly Salary", min_value=0, max_value=120000000, value=current_yearly, step=1000)
+            yearly_salary = st.sidebar.number_input("Yearly Salary", min_value=0, max_value=120000000, value=current_yearly, step=500)
         
         # Convert yearly down to monthly for calculations and update master state
         st.session_state.salary_monthly = yearly_salary / 12
