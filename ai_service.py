@@ -1,13 +1,14 @@
 from google import genai
 import json
 
-def fetch_ai_advice(salary, item_cost, currency, user_prompt):
+def fetch_ai_advice(salary, item_cost, currency, user_prompt, pre_tax):
     client = genai.Client()
 
     # Cleaned up prompt instructions so the AI doesn't read python scripts inside it
     full_prompt = f"""
     The user's current salary is {salary} {currency}.
-    The user is looking for an item which has a cost of {item_cost} {currency}
+    The user's current salary iscalculated in pre tax? {pre_tax}.
+    The user is looking for an item which has a cost of {item_cost} {currency} this may be inaccurate to the real prices acount for that in your response 
     If the user does not specify details about their item (like a car's mileage or trim), research and reply with a recommendation.
     User's goal/question: {user_prompt}
     

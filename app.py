@@ -14,7 +14,16 @@ st.sidebar.header("Your Financial Profile")
 
 input_mode = st.sidebar.radio("Select Input Mode", ["Slider", "Number Input"])
 
+pre_tax = st.sidebar.radio("Is your income after tax?", ["Before", "After"])
+if pre_tax == "Before":
+    pre_tax = True
+else:
+    pre_tax = False
+
+
+
 if input_mode == "Slider":
+    year_salary = st.sidebar.slider("Yearly Take-Home Salary", min_value=0, max_value=20000, value=5000, step=100)
     salary = st.sidebar.slider("Monthly Take-Home Salary", min_value=0, max_value=20000, value=5000, step=100)
     item_cost = st.sidebar.slider("Target Item Cost", min_value=0, max_value=100000, value=30000, step=500)
 else:
@@ -29,7 +38,7 @@ user_prompt = st.text_input("Ask your AI advisor a goal or question:", "Can I af
 if st.button("Get AI Financial Advice"):
     if user_prompt:
         with st.spinner("Processing your request, depending on demand this may take up to ~30 seconds"): #because of a spinner being moved you can tell if your app is frozen or not
-            raw_response, used_model = fetch_ai_advice(salary, item_cost, currency, user_prompt)
+            raw_response, used_model = fetch_ai_advice(salary, item_cost, currency, user_prompt, pre_tax)
             
             # Separate text response from JSON chart payload
             if "```json" in raw_response:
