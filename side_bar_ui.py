@@ -6,7 +6,7 @@ def render_side_bar():
     input_mode = st.sidebar.radio("Select Input Mode", ["Slider", "Number Input"])
     
     # --- REPLACE pre_tax = st.sidebar.radio(...) WITH THESE TWO LINES ---
-    income_type_selection = st.sidebar.radio("Income Type (the specific tax values may va)", ["Before Tax", "After Tax"])
+    income_type_selection = st.sidebar.radio("Income Type (the specific tax values may vary)", ["Before Tax", "After Tax"])
     pre_tax = True if income_type_selection == "Before Tax" else False
    
 
