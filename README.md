@@ -11,7 +11,7 @@ A full-stack, interactive web application built with Streamlit and the Google Ge
 ##  Tech Stack
 * **Frontend/UI:** Streamlit
 * **AI Integration:** Google GenAI SDK (`google-genai`)
-* **Environment:** Python 3.14, GitHub Codespaces
+* **Environment:** Python 3 GitHub Codespaces
 
 ## Setup / Live Demo
 **[Try the Live Web App Here](https://ai-financial-guide-2wzmqtvdgyz62foyrqwfpc.streamlit.app/)**
