@@ -2,35 +2,14 @@
 import streamlit as st
 import json
 from ai_service import fetch_ai_advice
-
 from chart_builder import render_donut_chart
-
+from side_bar_ui import render_side_bar
+salary, item_cost, currency, pre_tax, salary_mode = render_side_bar()
 st.set_page_config(page_title="AI Financial Advisor", layout="wide") #general ui config and title 
 st.title(" AI Financial Advisor & Budget Planner")
 
-#SLIDER SETTINGS AND CONFIG
-# Sidebar inputs for user financial profile UI CHANGES  uses a button to use sliders or text input values 
-st.sidebar.header("Your Financial Profile") 
-
-input_mode = st.sidebar.radio("Select Input Mode", ["Slider", "Number Input"])
-
-pre_tax = st.sidebar.radio("Is your income after tax?", ["Before", "After"])
-if pre_tax == "Before":
-    pre_tax = True
-else:
-    pre_tax = False
 
 
-
-if input_mode == "Slider":
-    year_salary = st.sidebar.slider("Yearly Take-Home Salary", min_value=0, max_value=20000, value=5000, step=100)
-    salary = st.sidebar.slider("Monthly Take-Home Salary", min_value=0, max_value=20000, value=5000, step=100)
-    item_cost = st.sidebar.slider("Target Item Cost", min_value=0, max_value=100000, value=30000, step=500)
-else:
-    salary = st.sidebar.number_input("Monthly Take-Home Salary", min_value=0, max_value=10000000, value=5000, step=100)
-    item_cost = st.sidebar.number_input("Target Item Cost", min_value=0, max_value=10000000, value=30000, step=500)
-#select box for the currency
-currency = st.sidebar.selectbox("Currency", ["CAD", "USD", "EUR", "GBP"])
 
 # Main user input ( textbar for input )
 user_prompt = st.text_input("Ask your AI advisor a goal or question:", "Can I afford to buy this item on my salary?")
@@ -38,7 +17,7 @@ user_prompt = st.text_input("Ask your AI advisor a goal or question:", "Can I af
 if st.button("Get AI Financial Advice"):
     if user_prompt:
         with st.spinner("Processing your request, depending on demand this may take up to ~30 seconds"): #because of a spinner being moved you can tell if your app is frozen or not
-            raw_response, used_model = fetch_ai_advice(salary, item_cost, currency, user_prompt, pre_tax)
+            raw_response, used_model = fetch_ai_advice(salary, item_cost, currency, user_prompt, pre_tax, salary_mode)
             
             # Separate text response from JSON chart payload
             if "```json" in raw_response:
